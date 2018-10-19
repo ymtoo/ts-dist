@@ -9,6 +9,7 @@ The following specifications of the distance measure are implemented.
 ## Dependencies
 * Python 3
 * Numpy
+* Numba
 
 ## References
 [1] https://www.cs.unm.edu/~mueen/DTW.pdf

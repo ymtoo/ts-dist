@@ -1,4 +1,5 @@
 """Dynamic time warping (DTW) distance."""
+from numba import jit as _jit
 import numpy as _np
 
 def _reshape_input(X):
@@ -7,6 +8,7 @@ def _reshape_input(X):
         X = _np.reshape(X, (1, X.size))
     return X
 
+@_jit(nopython=True)
 def _dtw_dist(X, Y, w=None):
     """Compute pairwise distance between two time series feature vectors based 
     on multidimensional DTW with dependent warping.
@@ -18,15 +20,16 @@ def _dtw_dist(X, Y, w=None):
     :Reference: https://www.cs.unm.edu/~mueen/DTW.pdf
     """
     if w is None:
-        w = _np.inf
+        w = _np.inf   
     n_frame_X, n_frame_Y = X.shape[1], Y.shape[1] 
 
     D = _np.full((n_frame_X+1, n_frame_Y+1), _np.inf)
     D[0, 0]= 0
     w = max(w, abs(n_frame_X-n_frame_Y))
     for i in range(1, n_frame_X+1):
+        X_vec = X[:, i-1]
         for j in range(max(1, i-w), min(n_frame_Y+1, i+w+1)):
-            cost = _np.sum(_np.abs(X[:, i-1]-Y[:, j-1]))
+            cost = _np.sum(_np.abs(X_vec-Y[:, j-1]))
             D[i, j] = cost+min(D[i-1, j], D[i, j-1], D[i-1, j-1])
     return D[n_frame_X, n_frame_Y]
 
