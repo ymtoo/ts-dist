@@ -4,7 +4,7 @@ This is a python implementation of distance measure between two time series feat
 ## Notes
 The following specifications of the distance measure are implemented.
 * Exact and locality constrained
-* Dependent and independent warping for multidimensional case
+* Dependent and independent warping for the multidimensional case
 
 ## Dependencies
 * Python 3
