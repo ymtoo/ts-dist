@@ -2,25 +2,17 @@
 from numba import jit as _jit
 import numpy as _np
 
-def _reshape_input(X):
-    """Reshape the time series feature vector to a 2-D array."""
-    if X.ndim == 1:
-        X = _np.reshape(X, (1, X.size))
-    return X
-
 @_jit(nopython=True)
-def _dtw_dist(X, Y, w=None):
+def _dtw_dist(X, Y, w):
     """Compute pairwise distance between two time series feature vectors based 
     on multidimensional DTW with dependent warping.
     
     :param X (2-D array): time series feature vector denoted by X
     :param Y (2-D array): time series feature vector denoted by Y
-    :param w (int): window size (default=None)
+    :param w (int): window size 
     :returns: distance between X and Y with the best alignment
     :Reference: https://www.cs.unm.edu/~mueen/DTW.pdf
-    """
-    if w is None:
-        w = _np.inf   
+    """ 
     n_frame_X, n_frame_Y = X.shape[1], Y.shape[1] 
 
     D = _np.full((n_frame_X+1, n_frame_Y+1), _np.inf)
@@ -33,17 +25,21 @@ def _dtw_dist(X, Y, w=None):
             D[i, j] = cost+min(D[i-1, j], D[i, j-1], D[i-1, j-1])
     return D[n_frame_X, n_frame_Y]
 
-def dtw_dist(X, Y, w=None, mode='dependent'):
+def dtw_dist(X, Y, w=_np.inf, mode='dependent'):
     """Compute pairwise distance between two time series feature vectors based on multidimensional DTW.
 
     :param X (array): time series feature vector denoted by X
     :param Y (array): time series feature vector denoted by Y
-    :param w (int): window size (default=None)
+    :param w (int): window size (default=Inf)
     :param mode (string): 'dependent' or 'independent' (default='dependent')
     :returns: distance between X and Y with the best alignment
     """
-    X = _reshape_input(_np.array(X))
-    Y = _reshape_input(_np.array(Y))
+    X = _np.array(X, dtype=_np.float)
+    Y = _np.array(Y, dtype=_np.float)
+    if X.ndim == 1:
+        X = _np.reshape(X, (1, X.size))
+    if Y.ndim == 1:
+        Y = _np.reshape(Y, (1, Y.size))
     if mode == 'dependent':
         dist = _dtw_dist(X, Y, w)
     elif mode == 'independent':
