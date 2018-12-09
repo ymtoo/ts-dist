@@ -34,8 +34,8 @@ def dtw_dist(X, Y, w=_np.inf, mode='dependent'):
     :param mode (string): 'dependent' or 'independent' (default='dependent')
     :returns: distance between X and Y with the best alignment
     """
-    X = _np.array(X, dtype=_np.complex128)
-    Y = _np.array(Y, dtype=_np.complex128)
+    X = _np.array(X, dtype=_np.float)
+    Y = _np.array(Y, dtype=_np.float)
     if X.ndim == 1:
         X = _np.reshape(X, (1, X.size))
     if Y.ndim == 1:
