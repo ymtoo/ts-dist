@@ -3,13 +3,14 @@ from numba import jit as _jit
 import numpy as _np
 
 @_jit(nopython=True)
-def _dtw_dist(X, Y, w):
+def _dtw_dist(X, Y, w, robust):
     """Compute pairwise distance between two time series feature vectors based 
     on multidimensional DTW with dependent warping.
     
     :param X (2-D array): time series feature vector denoted by X
     :param Y (2-D array): time series feature vector denoted by Y
     :param w (int): window size 
+    :param robust (Boolean): robust function of the difference between the feature vectors
     :returns: distance between X and Y with the best alignment
     :Reference: https://www.cs.unm.edu/~mueen/DTW.pdf
     """ 
@@ -21,16 +22,20 @@ def _dtw_dist(X, Y, w):
     for i in range(1, n_frame_X+1):
         X_vec = X[:, i-1]
         for j in range(max(1, i-w), min(n_frame_Y+1, i+w+1)):
-            cost = _np.sum(_np.abs(X_vec-Y[:, j-1]))
+            diff = _np.abs(X_vec-Y[:, j-1])
+            if robust is True:
+                diff = _np.log(diff)
+            cost = _np.sum(diff)
             D[i, j] = cost+min(D[i-1, j], D[i, j-1], D[i-1, j-1])
     return D[n_frame_X, n_frame_Y]
 
-def dtw_dist(X, Y, w=_np.inf, mode='dependent'):
+def dtw_dist(X, Y, w=_np.inf, robust=False, mode='dependent'):
     """Compute pairwise distance between two time series feature vectors based on multidimensional DTW.
 
     :param X (array): time series feature vector denoted by X
     :param Y (array): time series feature vector denoted by Y
     :param w (int): window size (default=Inf)
+    :param robust (Boolean): robust function of the difference between the feature vectors (default=False)
     :param mode (string): 'dependent' or 'independent' (default='dependent')
     :returns: distance between X and Y with the best alignment
     """
@@ -40,13 +45,15 @@ def dtw_dist(X, Y, w=_np.inf, mode='dependent'):
         X = _np.reshape(X, (1, X.size))
     if Y.ndim == 1:
         Y = _np.reshape(Y, (1, Y.size))
+    if not isinstance(robust, bool):
+        raise ValueError('The robust must be a boolean value.')
     if mode == 'dependent':
-        dist = _dtw_dist(X, Y, w)
+        dist = _dtw_dist(X, Y, w, robust)
     elif mode == 'independent':
         n_feature = X.shape[0]
         dist = 0
         for i in range(n_feature):
-            dist += _dtw_dist(X[[i], :], Y[[i], :], w)
+            dist += _dtw_dist(X[[i], :], Y[[i], :], w, robust)
     else:
         raise ValueError('The mode must be either \'dependent\' or \'independent\'.')
     return dist
