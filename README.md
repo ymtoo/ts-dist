@@ -41,5 +41,7 @@ edr_cy = edr_dist_cy(x, y)
 
 ## References
 [1] https://www.cs.unm.edu/~mueen/DTW.pdf
+
 [2] M. Vlachos, G. Kollios and D. Gunopulos, "Discovering Similar Multidimensional Trajectories", 2002.
+
 [3] L Chen, MT Özsu, V Oria, "Robust and fast similarity search for moving object trajectories", 2005.
