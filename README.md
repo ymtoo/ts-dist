@@ -26,11 +26,11 @@ y = np.random.normal(0, 1, (1000))
 dtw_py = dtw_dist_py(x, y)
 dtw_cy = dtw_dist_cy(x, y)
 
-lcss_py = lcss_dist_py(x, y)
-lcss_cy = lcss_dist_cy(x, y)
+lcss_py = lcss_dist_py(x, y, delta=_np.inf, epsilon=0.5)
+lcss_cy = lcss_dist_cy(x, y, delta=_np.inf, epsilon=0.5)
 
-edr_py = edr_dist_py(x, y)
-edr_cy = edr_dist_cy(x, y)
+edr_py = edr_dist_py(x, y, epsilon=0.5)
+edr_cy = edr_dist_cy(x, y, epsilon=0.5)
 ```
 
 ## Dependencies
