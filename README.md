@@ -5,7 +5,7 @@ The module contains Python implementations of distance measures between two real
 The following distance measures have been implemented.
 * Dynamic Time Warping (DTW) [1]
 * Longest Common Subsequence (LCSS) [2]
-* Edit Distance on Real sequence (edr) [3]
+* Edit Distance on Real sequence (EDR) [3]
 
 ## Example
 ```python
