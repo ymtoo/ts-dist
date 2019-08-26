@@ -90,7 +90,7 @@ def _edr_dist(X, Y, epsilon):
 
     :param X (array): time series feature array denoted by X
     :param Y (array): time series feature array denoted by Y
-    :epsilon (float): matching threshold
+    :param epsilon (float): matching threshold
     :returns: distance between X and Y with the best alignment
     :Reference: L. Chen et al., "Robust and Fast Similarity Search for Moving Object Trajectories", 2005.
     """
@@ -112,7 +112,7 @@ def edr_dist(X, Y, epsilon):
 
     :param X (array): time series feature array denoted by X
     :param Y (array): time series feature array denoted by Y
-    :epsilon (float): matching threshold
+    :param epsilon (float): matching threshold
     :returns: distance between X and Y with the best alignment
     :Reference: L. Chen et al., "Robust and Fast Similarity Search for Moving Object Trajectories", 2005.
     """
