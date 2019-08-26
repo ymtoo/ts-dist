@@ -12,11 +12,11 @@ The following distance measures have been implemented.
 import numpy as np
 import pyximport; pyximport.install()
 
-from dtw_dist import dtw_dist as dtw_dist_py
+from ts_dist import dtw_dist as dtw_dist_py
 from ts_dist import lcss_dist as lcss_dist_py
 from ts_dist import edr_dist as edr_dist_py
 
-from dtw_dist_cy import dtw_dist as dtw_dist_cy
+from ts_dist_cy import dtw_dist as dtw_dist_cy
 from ts_dist_cy import lcss_dist as lcss_dist_cy
 from ts_dist_cy import edr_dist as edr_dist_cy
 
