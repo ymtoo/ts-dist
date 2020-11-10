@@ -33,6 +33,17 @@ edr_py = edr_dist_py(x, y, epsilon=0.5)
 edr_cy = edr_dist_cy(x, y, epsilon=0.5)
 ```
 
+## Benchmark
+```bash
+$ python benchmark_ts_dist.py
+Average time taken for dtw_dist_py: 0.15160710269992705
+Average time taken for dtw_dist_cy: 0.022138842300046237
+Average time taken for lcss_dist_py: 0.10573908710066462
+Average time taken for lcss_dist_cy: 0.031031618600536603
+Average time taken for edr_dist_py: 0.13265878920065005
+Average time taken for edr_dist_cy: 0.03591040430037538
+```
+
 ## Dependencies
 * Python 3
 * Cython
