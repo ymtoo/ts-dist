@@ -106,7 +106,7 @@ cdef double _lcss_dist(double[:, :] X, double[:, :] Y, delta, epsilon):
     for i in range(1, n_frame_X+1):
         for j in range(1, n_frame_Y+1):
             if abs_diff_less(X[:, i-1], Y[:, j-1], n_feature, epsilon) and (
-                _np.abs(i-j) < delta):
+                abs(i-j) < delta):
                 S[i, j] = S[i-1, j-1]+1
             else:
                 S[i, j] = max(S[i, j-1], S[i-1, j])
