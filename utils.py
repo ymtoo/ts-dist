@@ -8,8 +8,8 @@ def check_arrays(X, Y):
     :param Y (array): time series feature array denoted by Y
     :returns: X and Y in 2D numpy arrays
     """
-    X = _np.array(X, dtype=_np.float)
-    Y = _np.array(Y, dtype=_np.float)
+    X = _np.array(X, dtype=float)
+    Y = _np.array(Y, dtype=float)
     if X.ndim == 1:
         X = _np.reshape(X, (1, X.size))
     if Y.ndim == 1:
